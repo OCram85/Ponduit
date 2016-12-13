@@ -1,0 +1,43 @@
+TOPIC
+        about_PhabricatorAPI
+
+SHORT DESCRIPTION
+        This module provides a simple PhabricatorAPI Conduit CLI interface.
+
+LONG DESCRIPTION
+        Use the `Invoke-ConduitMethod` cmdlet to call known conduit methods listed at
+        https://secure.phabricator.com/conduit/ .
+
+INSTALLING PHABRICATORAPI
+
+        1. Download the latest files from https://github.com/OCram85/PhabricatorAPI
+        2. Take all files from the `src` dir and copy it into your module path
+        3. Check the module with `Get-Module -Name PhabricatorAPI -ListAvailable`
+
+GETTING STARTED
+
+        You need to import the module first with `Import-Module PhabricatorAPI`. Depending on your installed
+        Powershell version you can use the functions or the class to interact with Conduit. For instuctions how to
+        use the PhabricatorAPI class see help page about_PhabricatorAPI_Class.
+
+        In both cases you need a propper configuration file. Therefore you need a api token to run the methods and
+        the Phabicator URI itself.
+
+        You can set both with:
+                1.  `Set-ConduitConfig -Key 'conduit-token' -Value 'api-123456'`
+                2. `Set-ConduitConfig -Key 'phabricator-uri' -Value 'https://secure.phabricator.com'`
+
+        Now you are able to build a cache list with all all known conduit methods:
+                3. `Update-ConduitMethods`
+
+        That's it. Finally you are able to run Conduit methods with `Invoke-ConduitMethod`.
+
+        For example:
+                $Response =`Invoke-ConduitMethod -Method 'phriction.info'` -Body @{'slug' = "changelog/"}
+                $Response.Result
+
+
+SEE ALSO
+        Set-ConduitConfig
+        Get-ConduitConfig
+        about_PhabricatorAPI_Class

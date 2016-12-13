@@ -1,0 +1,25 @@
+TOPIC
+        about_PhabricatorAPI_Class
+
+SHORT DESCRIPTION
+        The PhabricatorAPI Class provides an easy interface for conduit calls.
+        You need PowerShell 5 to create an class instance. For PoweShell 4 see about_PhabrictorAPI_Cmdlets
+
+LONG DESCRIPTION
+        <LONGDESCRIPTION>
+
+<CUSTOMHEADER>
+
+        <CONTENT>
+
+<CUSTOMHEADER>
+
+        <CONTENT>
+
+CONTRIBUTE
+
+        <CONTENT>
+
+SEE ALSO
+        <CMDLET-NAME>
+        <about_page>
