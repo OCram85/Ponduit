@@ -6,4 +6,5 @@ ForEach ($Item in $Items) {
     . $Item
 }
 
-Export-ModuleMember -Function *
+# Exports are now controlles by module Maniphest
+# Export-ModuleMember -Function *

@@ -1,27 +1,27 @@
 Function Get-ConduitConfigPath() {
     <#
     .SYNOPSIS
-        A brief description of the function or script.
+        Returns a valid path for the conduit config file.
 
     .DESCRIPTION
-        Describe the function of the script using a single sentence or more.
-
-    .PARAMETER One
-        Description of the Parameter (what it does)
+        Depending on the current OS this returns a valid path for the conduit config file.
 
     .INPUTS
-        Describe the script input parameters (if any), otherwise it may also list the word "[None]".
+        [None]
 
     .OUTPUTS
-        Describe the script output parameters (if any), otherwise it may also list the word "[None]".
+        [String]
 
     .EXAMPLE
-        .\Remove-Some-Script.ps1 -One content
+        $Path = Get-ConduitConfigPath
+        If (Test-Path -Path $Path) {
+            Get-ConduitConfig -Raw
+        }
 
     .NOTES
         File Name   : Get-ConduitConfigPath.ps1
         Author      : Marco Blessing - marco.blessing@googlemail.com
-        Requires    : <ModuleNames>
+        Requires    :
 
     .LINK
         https://github.com/OCram85/PhabricatorAPI

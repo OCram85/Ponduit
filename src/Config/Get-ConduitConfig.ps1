@@ -1,32 +1,41 @@
 Function Get-ConduitConfig() {
     <#
             .SYNOPSIS
-            A brief description of the function or script.
+            Get-ConduitConfig returns saved config values.
 
             .DESCRIPTION
-            Describe the function of the script using a single sentence or more.
+            This function is a helper for other top level functions. You can use it to validate your
+            saved configuration.
 
-            .PARAMETER One
-            Description of the Parameter (what it does)
+            .PARAMETER Key
+            Specify the config key you would like to read.
+
+            .PARAMETER Raw
+            This Switch enables you to get the complete config.
 
             .INPUTS
-            Describe the script input parameters (if any), otherwise it may also list the word "[None]".
+            [None]
 
             .OUTPUTS
-            Describe the script output parameters (if any), otherwise it may also list the word "[None]".
+            [PSCustomObject]
 
             .EXAMPLE
-            .\Remove-Some-Script.ps1 -One content
+            Get-ConduitConfig -Raw
+
+            .EXAMPLE
+            $Foo = Get-ConduitConfig -Key 'conduit-token'
 
             .NOTES
             File Name   : Get-ConduitConfig.ps1
             Author      : Marco Blessing - marco.blessing@googlemail.com
-            Requires    : <ModuleNames>
+            Requires    :
 
             .LINK
             https://github.com/OCram85/PhabricatorAPI
+
     #>
     [CmdletBinding(DefaultParameterSetName="Simple")]
+    [OutputType([PSCustomObject])]
     Param(
         [Parameter(Mandatory = $True, ParameterSetName = 'Simple')]
         [ValidateSet('conduit-token', 'phabricator-uri')]
@@ -48,10 +57,23 @@ Function Get-ConduitConfig() {
             Catch {
                 Write-Error -Message "Could not read the existing config file!" -ErrorAction Stop
             }
+            If ($PSCmdlet.ParameterSetName -eq 'Simple') {
+                $Config = $Config.$Key
+            }
         }
     }
     End {
-        $Config.psobject.TypeNames.Insert(0,'PhabricatorAPI.Conduit.Config')
+        If ($PSCmdlet.ParameterSetName -eq 'Raw' ) {
+            $Config.psobject.TypeNames.Insert(0,'PhabricatorAPI.Conduit.Config')
+        }
+        Else {
+            $Config = [PSCustomObject]@{
+                Key = $Key
+                Value = $Config
+            }
+            $Config.psobject.TypeNames.Insert(0,'PhabricatorAPI.Conduit.Config.Item')
+            Update-TypeData -TypeName "PhabricatorAPI.Conduit.Config.Item" -DefaultDisplayProperty 'Value' -DefaultDisplayPropertySet 'Value'
+        }
         Return $Config
     }
 }

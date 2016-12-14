@@ -1,27 +1,24 @@
 Function Get-OS() {
     <#
     .SYNOPSIS
-        A brief description of the function or script.
+        Get-OS returns the current running OS Type.
 
     .DESCRIPTION
-        Describe the function of the script using a single sentence or more.
-
-    .PARAMETER One
-        Description of the Parameter (what it does)
+        Get-OS tries to deteminate the curren OS Type by some known prexisting enviroment variables.
 
     .INPUTS
-        Describe the script input parameters (if any), otherwise it may also list the word "[None]".
+        [None]
 
     .OUTPUTS
-        Describe the script output parameters (if any), otherwise it may also list the word "[None]".
+        [String]
 
     .EXAMPLE
-        .\Remove-Some-Script.ps1 -One content
+        Get-OS
 
     .NOTES
         File Name   : Get-OS.ps1
         Author      : Marco Blessing - marco.blessing@googlemail.com
-        Requires    : <ModuleNames>
+        Requires    :
 
     .LINK
         https://github.com/OCram85/PhabricatorAPI

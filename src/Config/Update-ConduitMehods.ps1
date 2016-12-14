@@ -1,27 +1,25 @@
 Function Update-ConduitMethods() {
     <#
     .SYNOPSIS
-        A brief description of the function or script.
+        Update-ConduitMethods updates all known conduitmehtods to a local cache like list.
 
     .DESCRIPTION
-        Describe the function of the script using a single sentence or more.
-
-    .PARAMETER One
-        Description of the Parameter (what it does)
+        This function is a helper for Invoke-ConduitMethod. It updates a local cache list to validate the method
+        param from Invoke-ConduitMethod.
 
     .INPUTS
-        Describe the script input parameters (if any), otherwise it may also list the word "[None]".
+        [None]
 
     .OUTPUTS
-        Describe the script output parameters (if any), otherwise it may also list the word "[None]".
+        [None]
 
     .EXAMPLE
-        .\Remove-Some-Script.ps1 -One content
+        Update-ConduitMethods
 
     .NOTES
         File Name   : Update-ConduitMethods.ps1
         Author      : Marco Blessing - marco.blessing@googlemail.com
-        Requires    : <ModuleNames>
+        Requires    :
 
     .LINK
         https://github.com/OCram85/PhabricatorAPI

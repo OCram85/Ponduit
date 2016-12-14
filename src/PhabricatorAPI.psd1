@@ -30,7 +30,7 @@ Copyright = 'OCram85'
 Description = 'PhabricatorAPI provides a simple CLI interface for Phanricator through Conduit calls.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0.0.0'
+PowerShellVersion = '4.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -66,7 +66,12 @@ ScriptsToProcess = @('Classes\ClassLoader.ps1')
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = '*'
+FunctionsToExport = @(
+    'Get-ConduitConfig',
+    'Set-ConduitConfig',
+    'Update-ConduitMethods',
+    'Invoke-ConduitMethods'
+)
 
 # Cmdlets to export from this module
 CmdletsToExport = '*'
@@ -92,13 +97,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('powershell', 'phabricator', 'phabricatorAPI', 'conduit', 'conduit client')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/OCram85/PhabricatorAPI/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/OCram85/PhabricatorAPI'
 
         # A URL to an icon representing this module.
         # IconUri = ''

@@ -1,27 +1,34 @@
 Function Set-ConduitConfig() {
     <#
     .SYNOPSIS
-        A brief description of the function or script.
+        Set-ConduitConfig stores your configuration.
 
     .DESCRIPTION
-        Describe the function of the script using a single sentence or more.
+        This function is needet to take care of your config. You need to specify the config key you would like to
+        change, followed by the desired value
 
-    .PARAMETER One
-        Description of the Parameter (what it does)
+    .PARAMETER Key
+        Specify the config key you would like to change.
+
+    .PARAMETER Value
+        This value will be stored in the corresponding config key.
 
     .INPUTS
-        Describe the script input parameters (if any), otherwise it may also list the word "[None]".
+        [None]
 
     .OUTPUTS
-        Describe the script output parameters (if any), otherwise it may also list the word "[None]".
+        [None]
 
     .EXAMPLE
-        .\Remove-Some-Script.ps1 -One content
+        Set-ConduitConfig -Key 'conduit-token' -Value "api-1234556780abcd"
+
+    .EXAMPLE
+        Set-ConduitConfig -Key 'pahbricator-uri -Value 'https://secure.phabricator.com'
 
     .NOTES
         File Name   : SetConduitConfig.ps1
         Author      : Marco Blessing - marco.blessing@googlemail.com
-        Requires    : <ModuleNames>
+        Requires    :
 
     .LINK
         https://github.com/OCram85/PhabricatorAPI
