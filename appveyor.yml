@@ -1,0 +1,27 @@
+version: 1.0.{build}
+
+image: Visual Studio 2015
+
+# Install pester module and init the Appveyor support.
+install:
+  - cinst pester
+  - ps: Import-Module .\tools\AppVeyor.psm1
+
+
+build: false
+
+build_script:
+  - ps: Invoke-AppveyorBuild
+
+test_script:
+  - ps: Invoke-AppVeyorTests
+
+deploy:
+  - provider: GitHub
+    auth_token:
+      secure: M+bBX5/nKdJB0eViP7xtrLVTwf3vGDUA9N2MMprZp2i+9ZR3CBVcJnSzJWUmalhB
+    artifact: PhabricatorAPI.zip           # upload all NuGet packages to release assets
+    draft: false
+    prerelease: false
+    on:
+      branch: master                # release from master branch only
