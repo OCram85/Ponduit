@@ -70,7 +70,7 @@ FunctionsToExport = @(
     'Get-ConduitConfig',
     'Set-ConduitConfig',
     'Update-ConduitMethods',
-    'Invoke-ConduitMethods'
+    'Invoke-ConduitMethod'
 )
 
 # Cmdlets to export from this module

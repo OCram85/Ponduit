@@ -61,6 +61,13 @@ Function Get-ConduitConfig() {
                 $Config = $Config.$Key
             }
         }
+        Else {
+            $Config = [PSCustomObject]@{
+                "phabricator-uri" = ''
+                "conduit-token" = ''
+                "conduit-methods" = ''
+            }    
+        }
     }
     End {
         If ($PSCmdlet.ParameterSetName -eq 'Raw' ) {
