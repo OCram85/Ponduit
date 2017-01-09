@@ -1,0 +1,29 @@
+TOPIC
+        about_PhabricatorAPI_Class
+
+SHORT DESCRIPTION
+        The PhabricatorAPI Class provides an easy interface for conduit calls.
+        You need PowerShell version 5 or newer to create an class instance.
+        For PoweShell 4 see the about page about_PhabrictorAPI_Cmdlets.
+
+LONG DESCRIPTION
+        Start using the class while importing the module itself. Therefore use `Import-Module Phabricator API`.
+        The nested classloader should now determinate your powershell version and try to load the class definition.
+
+        To create an class class instance use a constructor method:
+
+        $ConduitClient = [PhabricatorAPI]::new()
+
+        or
+
+        $ConduitClient = [PhabricatorAPI]::new($ConduitToken, $PhabricatorURI)
+
+        The first constructor tries to read the a existing config and builds the instance with this values.
+        If you need a onetime configuration you can use the second constructor with the needed parameters. This time
+        the config won't be saved anywhere.
+
+
+SEE ALSO
+        Set-ConduitConfig
+        Get-ConduitConfig
+        about_PhabricatorAPI_Class
