@@ -1,0 +1,43 @@
+TOPIC
+        about_Ponduit
+
+SHORT DESCRIPTION
+        This module provides a simple Ponduit Conduit CLI interface.
+
+LONG DESCRIPTION
+        Use the `Invoke-ConduitMethod` cmdlet to call known conduit methods listed at
+        https://secure.phabricator.com/conduit/ .
+
+INSTALLING Ponduit
+
+        1. Download the latest release `Ponduit.zip`files from https://github.com/OCram85/Ponduit.
+        2. Extract the ZIP file an move the files into your module path.
+        3. Check the module with `Get-Module -Name Ponduit -ListAvailable`.
+
+GETTING STARTED
+
+        You need to import the module first with `Import-Module Ponduit`. Depending on your installed
+        Powershell version you can use the functions or the class to interact with Conduit. For instuctions how to
+        use the Ponduit class see help page about_Ponduit_Class.
+
+        In both cases you need a propper configuration file. Therefore you need a api token to run the methods and
+        the Phabicator URI itself.
+
+        You can set both with:
+                1.  `Set-ConduitConfig -Key 'conduit-token' -Value 'api-123456'`
+                2. `Set-ConduitConfig -Key 'phabricator-uri' -Value 'https://secure.phabricator.com'`
+
+        Now you are able to build a cache list with all all known conduit methods:
+                3. `Update-ConduitMethods`
+
+        That's it. Finally you are able to run Conduit methods with `Invoke-ConduitMethod`.
+
+        For example:
+                $Response =`Invoke-ConduitMethod -Method 'phriction.info'` -Body @{'slug' = "changelog/"}
+                $Response.Result
+
+
+SEE ALSO
+        Set-ConduitConfig
+        Get-ConduitConfig
+        about_Ponduit_Class
