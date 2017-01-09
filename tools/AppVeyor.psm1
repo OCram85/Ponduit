@@ -48,12 +48,12 @@ Function Invoke-AppVeyorBuild() {
             Details = 'Extracting srouce files and compressing them into zip file.'
         }
         Add-AppveyorMessage @MsgParams
-        7z a PhabricatorAPI.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+        7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
         $MsgParams = @{
             Message = 'Pushing artifacts'
             Category = 'Information'
             Details = 'Pushing artifacts to AppVeyor store.'
         }
         Add-AppveyorMessage @MsgParams
-        Push-AppveyorArtifact PhabricatorAPI.zip
+        Push-AppveyorArtifact Ponduit.zip
 }

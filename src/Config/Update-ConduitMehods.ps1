@@ -22,7 +22,7 @@ Function Update-ConduitMethods() {
         Requires    :
 
     .LINK
-        https://github.com/OCram85/PhabricatorAPI
+        https://github.com/OCram85/Ponduit
     #>
     [CmdletBinding()]
     Param()

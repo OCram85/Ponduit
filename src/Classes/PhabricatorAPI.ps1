@@ -4,7 +4,7 @@ Enum OSType {
     OSX
 }
 
-Class PhabricatorAPI {
+Class Ponduit {
     # hidden backend properties
     hidden [OSType]$_OS
     hidden [String]$_ConduitToken
@@ -12,7 +12,7 @@ Class PhabricatorAPI {
     hidden [String]$_PhabricatorURI
     hidden [String[]]$_ConduitMethods
 
-    PhabricatorAPI () {
+    Ponduit () {
         # Init internal properties
         $this.GetOS()
         $this.GetConduitConfigPath()
@@ -77,7 +77,7 @@ Class PhabricatorAPI {
         }
     }
 
-    PhabricatorAPI ([String]$ConduitToken, [String]$PhabricatorURI) {
+    Ponduit ([String]$ConduitToken, [String]$PhabricatorURI) {
         $this.GetOS()
         $this._ConduitToken = $ConduitToken
         $this._PhabricatorURI = $PhabricatorURI

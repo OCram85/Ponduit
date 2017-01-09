@@ -20,7 +20,7 @@ deploy:
   - provider: GitHub
     auth_token:
       secure: M+bBX5/nKdJB0eViP7xtrLVTwf3vGDUA9N2MMprZp2i+9ZR3CBVcJnSzJWUmalhB
-    artifact: PhabricatorAPI.zip           # upload all NuGet packages to release assets
+    artifact: Ponduit.zip           # upload all NuGet packages to release assets
     draft: false
     prerelease: false
     on:

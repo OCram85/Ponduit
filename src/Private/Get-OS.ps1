@@ -28,11 +28,11 @@ Function Get-OS() {
             Requires    :
 
             .LINK
-            https://github.com/OCram85/PhabricatorAPI
+            https://github.com/OCram85/Ponduit
     #>
     [CmdletBinding()]
     Param()
-    
+
     $PSVersion = Get-PSVersion
     If ($PSVersion.Major -le 5) {
         $Env:OS

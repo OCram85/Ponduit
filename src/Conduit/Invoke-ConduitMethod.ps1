@@ -1,30 +1,30 @@
 Function Invoke-ConduitMethod() {
     <#
-            .SYNOPSIS
-            A brief description of the function or script.
+    .SYNOPSIS
+        A brief description of the function or script.
 
-            .DESCRIPTION
-            Describe the function of the script using a single sentence or more.
+    .DESCRIPTION
+        Describe the function of the script using a single sentence or more.
 
-            .PARAMETER Method
-            Description of the Parameter (what it does)
+    .PARAMETER Method
+        Description of the Parameter (what it does)
 
-            .INPUTS
-            Describe the script input parameters (if any), otherwise it may also list the word "[None]".
+    .INPUTS
+        Describe the script input parameters (if any), otherwise it may also list the word "[None]".
 
-            .OUTPUTS
-            Describe the script output parameters (if any), otherwise it may also list the word "[None]".
+    .OUTPUTS
+        Describe the script output parameters (if any), otherwise it may also list the word "[None]".
 
-            .EXAMPLE
-            .\Remove-Some-Script.ps1 -One content
+    .EXAMPLE
+        .\Remove-Some-Script.ps1 -One content
 
-            .NOTES
-            File Name   : Update-ConduitMethods.ps1
-            Author      : Marco Blessing - marco.blessing@googlemail.com
-            Requires    : <ModuleNames>
+    .NOTES
+        File Name   : Update-ConduitMethods.ps1
+        Author      : Marco Blessing - marco.blessing@googlemail.com
+        Requires    : <ModuleNames>
 
-            .LINK
-            https://github.com/OCram85/PhabricatorAPI
+    .LINK
+        https://github.com/OCram85/Ponduit
     #>
     [CmdletBinding()]
     Param(
@@ -72,7 +72,7 @@ Function Invoke-ConduitMethod() {
         return $RuntimeParameterDictionary
     }
     Begin {
-        # lets first bind the dynamc param to easy to use var
+        # lets first bind the dynamic param to easy to use var
         $Method = $PsBoundParameters[$ParameterName]
 
         $Config = Get-ConduitConfig -Raw
