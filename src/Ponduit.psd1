@@ -12,7 +12,7 @@
 RootModule = 'Ponduit.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0'
+ModuleVersion = '1.1'
 
 # ID used to uniquely identify this module
 GUID = '83913031-bbde-4b82-b00d-7d45faafe62f'
@@ -97,7 +97,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('powershell', 'phabricator', 'Ponduit', 'conduit', 'conduit client')
+        Tags = @('powershell', 'phabricator', 'Ponduit', 'conduit')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/OCram85/Ponduit/blob/master/LICENSE'
