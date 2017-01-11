@@ -48,7 +48,14 @@ Function Invoke-AppVeyorBuild() {
         Details = 'Extracting srouce files and compressing them into zip file.'
     }
     Add-AppveyorMessage @MsgParams
-    7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+    #7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+    $CompParams = @{
+        Path = "{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER
+        DestinationPath = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
+        Update = $True
+        Verbose = $True
+    }
+    Compress-Archive @CompParams
     $MsgParams = @{
         Message = 'Pushing artifacts'
         Category = 'Information'
@@ -72,6 +79,11 @@ Function Invoke-AppVeyorPSGallery() {
     Copy-Item @CopyParams
     #>
     Try {
+        $ExpandParams = @{
+            Path = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
+            DestinationPath = "{0}\WindowsPowerShell\Modules\Ponduit\" -f $Env:CommonProgramFiles
+        }
+        Expand-Archive @ExpandParams
         $PubParams = @{
             Name = "Ponduit"
             NuGetApiKey = $env:NuGetToken
