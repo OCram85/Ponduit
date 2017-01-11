@@ -42,18 +42,41 @@ Function Invoke-AppVeyorTests() {
 Function Invoke-AppVeyorBuild() {
     [CmdletBinding()]
     Param()
+    $MsgParams = @{
+        Message = 'Creating build artifacts'
+        Category = 'Information'
+        Details = 'Extracting srouce files and compressing them into zip file.'
+    }
+    Add-AppveyorMessage @MsgParams
+    7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+    $MsgParams = @{
+        Message = 'Pushing artifacts'
+        Category = 'Information'
+        Details = 'Pushing artifacts to AppVeyor store.'
+    }
+    Add-AppveyorMessage @MsgParams
+    Push-AppveyorArtifact Ponduit.zip
+}
+
+Function Invoke-AppVeyorPSGallery() {
+    [CmdletBinding()]
+    Param()
+    Write-Host "Publish Module on PowershellGallery."
+    Try {
+        $PubParams = @{
+            Path = "C:\projects\ponduit\src\"
+            NuGetApiKey = $env:NuGetToken
+            Verbose = $True
+        }
+        Publish-Module @PubParams
+    }
+    Catch {
         $MsgParams = @{
-            Message = 'Creating build artifacts'
-            Category = 'Information'
-            Details = 'Extracting srouce files and compressing them into zip file.'
+            Message = 'Deploy to PowershellGallery failed!'
+            Category = 'Error'
+            Details = $_.Exception.Message
         }
         Add-AppveyorMessage @MsgParams
-        7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
-        $MsgParams = @{
-            Message = 'Pushing artifacts'
-            Category = 'Information'
-            Details = 'Pushing artifacts to AppVeyor store.'
-        }
-        Add-AppveyorMessage @MsgParams
-        Push-AppveyorArtifact Ponduit.zip
+        Throw "$_.Exception.Message"
+    }
 }
