@@ -12,7 +12,7 @@
 RootModule = 'Ponduit.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1'
+ModuleVersion = '1.2'
 
 # ID used to uniquely identify this module
 GUID = '83913031-bbde-4b82-b00d-7d45faafe62f'
@@ -27,7 +27,7 @@ CompanyName = 'OCram85'
 Copyright = 'OCram85'
 
 # Description of the functionality provided by this module
-Description = 'Ponduit provides a simple CLI interface for Phanricator through Conduit calls.'
+Description = 'Ponduit provides a simple CLI interface for Phabricator through Conduit API calls.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '4.0'
