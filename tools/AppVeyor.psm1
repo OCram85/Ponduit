@@ -62,6 +62,7 @@ Function Invoke-AppVeyorPSGallery() {
     [CmdletBinding()]
     Param()
     Write-Host "Publish Module on PowershellGallery." -BackgroundColor Green
+    <#
     $CopyParams = @{
         Path = ".\src\*"
         Destination = "{0}\WindowsPowerShell\Modules\Ponduit\" -f $env:ProgramFiles
@@ -69,6 +70,7 @@ Function Invoke-AppVeyorPSGallery() {
         Verbose = $True
     }
     Copy-Item @CopyParams
+    #>
     Try {
         $PubParams = @{
             Name = "Ponduit"
