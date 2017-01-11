@@ -7,11 +7,14 @@ install:
   - cinst pester
   - ps: Import-Module .\tools\AppVeyor.psm1
 
+environment:
+  NuGetToken:
+    secure: 835qfZIkC9mE7QhkYfOZVAdR8rZhPvxG8BO4CbeaelRQOhlqmaSr8G1DWRJzZ/bS
 
 build: false
 
 build_script:
-  - ps: Invoke-AppveyorBuild
+  - ps: Invoke-AppVeyorBuild
 
 test_script:
   - ps: Invoke-AppVeyorTests
@@ -25,3 +28,6 @@ deploy:
     prerelease: false
     on:
       branch: master                # release from master branch only
+
+on_success:
+  - ps: Invoke-AppVeyorOnSuccess
