@@ -18,7 +18,7 @@ Function Invoke-AppVeyorTests() {
             Category = 'Information'
             Details = 'Now running all test found in .\tests\ dir.'
         }
-        Add-AppveyorMessage @MsgParams
+    Add-AppveyorMessage @MsgParams
     $res = Invoke-Pester -Path ".\tests\*" -OutputFormat NUnitXml -OutputFile $testResultsFile -PassThru
     $MsgParams = @{
             Message = 'Uploading Pester Results'
@@ -61,10 +61,17 @@ Function Invoke-AppVeyorBuild() {
 Function Invoke-AppVeyorPSGallery() {
     [CmdletBinding()]
     Param()
-    Write-Host "Publish Module on PowershellGallery."
+    Write-Host "Publish Module on PowershellGallery." -BackgroundColor Green
+    $CopyParams = @{
+        Path = ".\src\*"
+        Destination = "{0}\WindowsPowerShell\Modules\Ponduit\" -f $env:ProgramFiles
+        Recurse = $True
+        Verbose = $True
+    }
+    Copy-Item @CopyParams
     Try {
         $PubParams = @{
-            Path = "C:\projects\ponduit\src\"
+            Name = "Ponduit"
             NuGetApiKey = $env:NuGetToken
             Verbose = $True
         }
