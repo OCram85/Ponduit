@@ -12,7 +12,7 @@
 RootModule = 'Ponduit.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2'
+ModuleVersion = '1.3'
 
 # ID used to uniquely identify this module
 GUID = '83913031-bbde-4b82-b00d-7d45faafe62f'
