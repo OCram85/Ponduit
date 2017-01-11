@@ -58,7 +58,7 @@ Function Invoke-AppVeyorBuild() {
     Push-AppveyorArtifact Ponduit.zip
 }
 
-Function Invoke-AppVeyorOnSuccess() {
+Function Invoke-AppVeyorPSGallery() {
     [CmdletBinding()]
     Param()
     Write-Host "Publish Module on PowershellGallery."
