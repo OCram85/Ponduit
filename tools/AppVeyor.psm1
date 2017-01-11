@@ -72,7 +72,7 @@ Function Invoke-AppVeyorPSGallery() {
     Try {
         $ExpandParams = @{
             Path = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
-            DestinationPath = "{0}\WindowsPowerShell\Modules\Ponduit\" -f $Env:CommonProgramFiles
+            DestinationPath = "{0}\WindowsPowerShell\Modules\Ponduit\" -f $Env:ProgramFiles
         }
         Expand-Archive @ExpandParams -Verbose
         $PubParams = @{
