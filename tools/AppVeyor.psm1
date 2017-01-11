@@ -80,6 +80,7 @@ Function Invoke-AppVeyorPSGallery() {
             NuGetApiKey = $env:NuGetToken
             Verbose = $True
         }
+        Get-Module -Name Ponduit -ListAvailable
         Publish-Module @PubParams
     }
     Catch {
