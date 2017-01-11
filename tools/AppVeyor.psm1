@@ -64,7 +64,7 @@ Function Invoke-AppVeyorPSGallery() {
     Write-Host "Publish Module on PowershellGallery."
     Try {
         $PubParams = @{
-            Path = "C:\projects\ponduit\src\Ponduit.psd1"
+            Path = "C:\projects\ponduit\src\"
             NuGetApiKey = $env:NuGetToken
             Verbose = $True
         }
