@@ -62,7 +62,7 @@ Function Invoke-AppVeyorBuild() {
         Details = 'Pushing artifacts to AppVeyor store.'
     }
     Add-AppveyorMessage @MsgParams
-    Push-AppveyorArtifact Ponduit.zip
+    Push-AppveyorArtifact ".\bin\Ponduit.zip"
 }
 
 Function Invoke-AppVeyorPSGallery() {
