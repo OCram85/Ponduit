@@ -72,7 +72,10 @@ Function Invoke-AppVeyorPSGallery() {
     Try {
         $ExpandParams = @{
             Path = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
-            DestinationPath = "{0}\Documents\WindowsPowerShell\Modules\Ponduit\" -f $Env:HOME
+            # Mode extrction dir to user module path.
+            # If you store the module global, it appears twice.
+            # Hard coded path because HOME is empty.
+            DestinationPath = "C:\Users\appveyor\Documents\WindowsPowerShell\Modules\Ponduit\"
         }
         Expand-Archive @ExpandParams -Verbose
         $PubParams = @{
