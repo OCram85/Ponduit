@@ -29,5 +29,5 @@ deploy:
     on:
       branch: master                # release from master branch only
 
-deploy_script:
+after_deploy:
   - ps: Invoke-AppVeyorPSGallery
