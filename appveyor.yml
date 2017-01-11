@@ -2,6 +2,9 @@ version: 1.3.{build}
 
 image: Visual Studio 2015
 
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 # Install pester module and init the Appveyor support.
 install:
   - cinst pester
@@ -31,3 +34,6 @@ deploy:
 
 after_deploy:
   - ps: Invoke-AppVeyorPSGallery
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
