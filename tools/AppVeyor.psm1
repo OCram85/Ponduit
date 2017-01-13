@@ -25,7 +25,7 @@ Function Invoke-AppVeyorTests() {
             Category = 'Information'
             Details = 'Pester Tests finished. Uploading result file.'
         }
-        Add-AppveyorMessage @MsgParams
+    Add-AppveyorMessage @MsgParams
     (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testResultsFile))
     If ($res.FailedCount -gt 0) {
         $MsgParams = @{
