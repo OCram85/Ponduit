@@ -64,34 +64,3 @@ Function Invoke-AppVeyorBuild() {
     Add-AppveyorMessage @MsgParams
     Push-AppveyorArtifact ".\bin\Ponduit.zip"
 }
-
-Function Invoke-AppVeyorPSGallery() {
-    [CmdletBinding()]
-    Param()
-    Write-Host "Publish Module on PowershellGallery." -BackgroundColor Green
-    Try {
-        $ExpandParams = @{
-            Path = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
-            # Mode extrction dir to user module path.
-            # If you store the module global, it appears twice.
-            # Hard coded path because HOME is empty.
-            DestinationPath = "C:\Users\appveyor\Documents\WindowsPowerShell\Modules\Ponduit\"
-        }
-        Expand-Archive @ExpandParams -Verbose
-        $PubParams = @{
-            Name = "Ponduit"
-            NuGetApiKey = $env:NuGetToken
-            Verbose = $True
-        }
-        Publish-Module @PubParams
-    }
-    Catch {
-        $MsgParams = @{
-            Message = 'Deploy to PowershellGallery failed!'
-            Category = 'Error'
-            Details = $_.Exception.Message
-        }
-        Add-AppveyorMessage @MsgParams
-        Throw "$_.Exception.Message"
-    }
-}

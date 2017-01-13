@@ -28,6 +28,3 @@ deploy:
     prerelease: false
     on:
       branch: master                # release from master branch only
-
-after_deploy:
-  - ps: Invoke-AppVeyorPSGallery
