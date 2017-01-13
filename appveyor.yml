@@ -28,3 +28,6 @@ deploy:
     prerelease: false
     on:
       branch: master                # release from master branch only
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
