@@ -3,9 +3,8 @@ Function Invoke-AppVeyorBumpVersion() {
     Param()
 
     Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
-    Get-ChildItem Env:
-    Write-Host "Getting vars for debugging:" -ForegroundColor Yellow
-    Get-Variable -Name *
+    # Filter Results to prevent exposing secure vars.
+    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notlike "NuGetToken"} | Sort-Object -Property Name | Format-Table
 
     Try {
         $ModManifest = Get-Content -Path '.\src\Ponduit.psd1'
@@ -114,7 +113,7 @@ function Invoke-AppVeyorPSGallery() {
             Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -Force
         }
         Else {
-            Write-Host "Skip publishing to PS Gallery because we are on $(env:APPVEYOR_REPO_BRANCH) branch." -ForegroundColor Yellow
+            Write-Host "Skip publishing to PS Gallery because we are on $($env:APPVEYOR_REPO_BRANCH) branch." -ForegroundColor Yellow
             # had to remve the publish-Module statement bacause it would publish although the -WhatIf is given.
             # Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -WhatIf
         }
