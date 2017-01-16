@@ -114,7 +114,8 @@ function Invoke-AppVeyorPSGallery() {
             Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -Force
         }
         Else {
-            Write-Host "try to publish module -Whatif" -ForegroundColor Yellow
+            Write-Host "Skip publishing to PS Gallery because we are on $(env:APPVEYOR_REPO_BRANCH) branch." -ForegroundColor Yellow
+            # had to remve the publish-Module statement bacause it would publish although the -WhatIf is given.
             # Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -WhatIf
         }
     }
