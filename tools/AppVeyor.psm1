@@ -1,9 +1,21 @@
 Function Invoke-AppVeyorBumpVersion() {
     [CmdletBinding()]
     Param()
-    $ModManifest = Get-Content -Path '.\src\Ponduit.psd1'
-    $BumpedManifest = $ModManifest -replace '$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
-    Out-File -FilePath '.\src\Ponduit.psd1' -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
+    Try {
+        $ModManifest = Get-Content -Path '.\src\Ponduit.psd1'
+        $BumpedManifest = $ModManifest -replace '\$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
+        Remove-Item -Path '.\src\Ponduit.psd1'
+        Out-File -FilePath '.\src\Ponduit.psd1' -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
+    }
+    Catch {
+        $MsgParams = @{
+            Message = 'Could not bump current version into module manifest.'
+            Category = 'Error'
+            Details = $_.Exception.Message
+        }
+        Add-AppveyorMessage @MsgParams
+        Throw $MsgParams.Message
+    }
 }
 
 Function Invoke-AppVeyorBuild() {
@@ -15,7 +27,11 @@ Function Invoke-AppVeyorBuild() {
         Details = 'Extracting srouce files and compressing them into zip file.'
     }
     Add-AppveyorMessage @MsgParams
-    #7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+
+    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
+    Get-ChildItem Env:
+    Write-Host "Getting vars for debugging:" -ForegroundColor Yellow
+    Get-Variable -Name *
     $CompParams = @{
         Path = "{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER
         DestinationPath = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
@@ -68,7 +84,7 @@ Function Invoke-AppVeyorTests() {
             Details = "$($res.FailedCount) tests failed."
         }
         Add-AppveyorMessage @MsgParams
-        Throw "$($res.FailedCount) tests failed."
+        Throw $MsgParams.Message
     }
 
 }
@@ -76,10 +92,38 @@ Function Invoke-AppVeyorTests() {
 function Invoke-AppVeyorPSGallery() {
     [CmdletBinding()]
     Param()
-    If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
-        Expand-Archive -Path '.\bin\Ponduit.zip' -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\Ponduit\' -Verbose
-        Import-Module -Name 'Ponduit' -Verbose -Force
-        Write-Host "try to publish module" -ForegroundColor Red -BackgroundColor Black
-        Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -Force
+    Expand-Archive -Path '.\bin\Ponduit.zip' -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\Ponduit\' -Verbose
+    Import-Module -Name 'Ponduit' -Verbose -Force
+    Write-Host "Available Package Provider:" -ForegroundColor Yellow
+    Get-PackageProvider -ListAvailable
+    Write-Host "Available Package Sources:" -ForegroundColor Yellow
+    Get-PackageSource
+    Try {
+        Write-Host "Try to get NuGet Provider:" -ForegroundColor Yellow
+        Get-PackageProvider -Name NuGet -ErrorAction Stop
+    }
+    Catch {
+        Write-Host "Installing NuGet..." -ForegroundColor Yellow
+        Install-PackageProvider -Name NuGet -MinimumVersion '2.8.5.201' -Force -Verbose
+        Import-PackageProvider NuGet -MinimumVersion '2.8.5.201' -Force
+    }
+    Try {
+        If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
+            Write-Host "try to publish module" -ForegroundColor Yellow
+            Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -Force
+        }
+        Else {
+            Write-Host "try to publish module -Whatif" -ForegroundColor Yellow
+            # Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -WhatIf
+        }
+    }
+    Catch {
+        $MsgParams = @{
+            Message = 'Could not delpoy module to PSGallery.'
+            Category = 'Error'
+            Details = $_.Exception.Message
+        }
+        Add-AppveyorMessage @MsgParams
+        Throw $MsgParams.Message
     }
 }
