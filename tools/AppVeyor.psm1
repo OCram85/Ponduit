@@ -52,36 +52,56 @@ Function Invoke-AppVeyorTests() {
     [CmdletBinding()]
     Param()
 
-    $testResultsFile = ".\TestsResults.xml"
-    If (Test-Path -Path $testResultsFile) {
-        Remove-Item -Path $testResultsFile -Force
-        $MsgParams = @{
-            Message = 'Old Pester Restults removed'
-            Category = 'Information'
-            Details = 'Unknown result file found. Removed it.'
-        }
-        Add-AppveyorMessage @MsgParams
-    }
-
     $MsgParams = @{
             Message = 'Starting Pester tests'
             Category = 'Information'
             Details = 'Now running all test found in .\tests\ dir.'
         }
     Add-AppveyorMessage @MsgParams
-    $res = Invoke-Pester -Path ".\tests\*" -OutputFormat NUnitXml -OutputFile $testResultsFile -PassThru
-    $MsgParams = @{
-            Message = 'Uploading Pester Results'
-            Category = 'Information'
-            Details = 'Pester Tests finished. Uploading result file.'
+    $testresults = Invoke-Pester -Path ".\tests\*" -PassThru
+    ForEach ($Item in $testresults.TestResult) {
+        Switch ($Item.Result) {
+            "Passed" {
+                $TestParams = @{
+                    Name = "{0}: {1}" -f $Item.Context, $Item.Name
+                    Framework = "NUnit"
+                    Filename = $Item.Describe
+                    Outcome = "Passed"
+                    Duration =$Item.Time.Milliseconds
+                }
+                Add-AppveyorTest @TestParams
+            }
+            "Failed" {
+                $TestParams = @{
+                    Name = "{0}: {1}" -f $Item.Context, $Item.Name
+                    Framework = "NUnit"
+                    Filename = $Item.Describe
+                    Outcome = "Failed"
+                    Duration =$Item.Time.Milliseconds
+                    ErrorMessage= $Item.FailureMessage
+                    ErrorStackTrace = $Item.StackTrace
+                }
+                Add-AppveyorTest @TestParams
+            }
+            Default {
+                $TestParams = @{
+                    Name = "{0}: {1}" -f $Item.Context, $Item.Name
+                    Framework = "NUnit"
+                    Filename = $Item.Describe
+                    Outcome = "None"
+                    Duration =$Item.Time.Milliseconds
+                    ErrorMessage= $Item.FailureMessage
+                    ErrorStackTrace = $Item.StackTrace
+                }
+                Add-AppveyorTest @TestParams
+            }
         }
-    Add-AppveyorMessage @MsgParams
-    (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testResultsFile))
-    If ($res.FailedCount -gt 0) {
+    }
+    If ($testresults.FailedCount -gt 0) {
         $MsgParams = @{
             Message = 'Pester Tests failed.'
             Category = 'Error'
-            Details = "$($res.FailedCount) tests failed."
+            Details = "$($testresults.FailedCount) tests failed."
         }
         Add-AppveyorMessage @MsgParams
         Throw $MsgParams.Message
