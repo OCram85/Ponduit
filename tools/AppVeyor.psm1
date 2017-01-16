@@ -1,6 +1,12 @@
 Function Invoke-AppVeyorBumpVersion() {
     [CmdletBinding()]
     Param()
+
+    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
+    Get-ChildItem Env:
+    Write-Host "Getting vars for debugging:" -ForegroundColor Yellow
+    Get-Variable -Name *
+
     Try {
         $ModManifest = Get-Content -Path '.\src\Ponduit.psd1'
         $BumpedManifest = $ModManifest -replace '\$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
@@ -27,11 +33,6 @@ Function Invoke-AppVeyorBuild() {
         Details = 'Extracting srouce files and compressing them into zip file.'
     }
     Add-AppveyorMessage @MsgParams
-
-    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
-    Get-ChildItem Env:
-    Write-Host "Getting vars for debugging:" -ForegroundColor Yellow
-    Get-Variable -Name *
     $CompParams = @{
         Path = "{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER
         DestinationPath = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
