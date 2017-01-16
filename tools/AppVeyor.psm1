@@ -1,3 +1,37 @@
+Function Invoke-AppVeyorBumpVersion() {
+    [CmdletBinding()]
+    Param()
+    $ModManifest = Get-Content -Path '.\src\Ponduit.psd1'
+    $BumpedManifest = $ModManifest -replace '$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
+    Out-File -FilePath '.\src\Ponduit.psd1' -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
+}
+
+Function Invoke-AppVeyorBuild() {
+    [CmdletBinding()]
+    Param()
+    $MsgParams = @{
+        Message = 'Creating build artifacts'
+        Category = 'Information'
+        Details = 'Extracting srouce files and compressing them into zip file.'
+    }
+    Add-AppveyorMessage @MsgParams
+    #7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+    $CompParams = @{
+        Path = "{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER
+        DestinationPath = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
+        Update = $True
+        Verbose = $True
+    }
+    Compress-Archive @CompParams
+    $MsgParams = @{
+        Message = 'Pushing artifacts'
+        Category = 'Information'
+        Details = 'Pushing artifacts to AppVeyor store.'
+    }
+    Add-AppveyorMessage @MsgParams
+    Push-AppveyorArtifact ".\bin\Ponduit.zip"
+}
+
 Function Invoke-AppVeyorTests() {
     [CmdletBinding()]
     Param()
@@ -39,28 +73,13 @@ Function Invoke-AppVeyorTests() {
 
 }
 
-Function Invoke-AppVeyorBuild() {
+function Invoke-AppVeyorPSGallery() {
     [CmdletBinding()]
     Param()
-    $MsgParams = @{
-        Message = 'Creating build artifacts'
-        Category = 'Information'
-        Details = 'Extracting srouce files and compressing them into zip file.'
+    If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
+        Expand-Archive -Path '.\bin\Ponduit.zip' -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\Ponduit\' -Verbose
+        Import-Module -Name 'Ponduit' -Verbose -Force
+        Write-Host "try to publish module" -ForegroundColor Red -BackgroundColor Black
+        Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -Force
     }
-    Add-AppveyorMessage @MsgParams
-    #7z a Ponduit.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
-    $CompParams = @{
-        Path = "{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER
-        DestinationPath = "{0}\bin\Ponduit.zip" -f $env:APPVEYOR_BUILD_FOLDER
-        Update = $True
-        Verbose = $True
-    }
-    Compress-Archive @CompParams
-    $MsgParams = @{
-        Message = 'Pushing artifacts'
-        Category = 'Information'
-        Details = 'Pushing artifacts to AppVeyor store.'
-    }
-    Add-AppveyorMessage @MsgParams
-    Push-AppveyorArtifact ".\bin\Ponduit.zip"
 }
