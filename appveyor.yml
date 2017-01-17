@@ -1,6 +1,14 @@
 version: 1.3.{build}
 
-image: Visual Studio 2015
+branches:
+  only:
+    - master
+    - dev
+    - debug
+
+skip_tags: true
+
+image: WMF 5
 
 # Install pester module and init the Appveyor support.
 install:
@@ -12,6 +20,9 @@ environment:
     secure: 835qfZIkC9mE7QhkYfOZVAdR8rZhPvxG8BO4CbeaelRQOhlqmaSr8G1DWRJzZ/bS
 
 build: false
+
+before_build:
+  - ps: Invoke-AppVeyorBumpVersion
 
 build_script:
   - ps: Invoke-AppVeyorBuild
@@ -28,4 +39,6 @@ deploy:
     prerelease: false
     on:
       branch: master                # release from master branch only
-      appveyor_repo_tag: true       # deploy only on tag push
+
+after_deploy:
+  - ps: Invoke-AppVeyorPSGallery

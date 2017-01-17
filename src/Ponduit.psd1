@@ -12,7 +12,8 @@
 RootModule = 'Ponduit.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3'
+# We need to replace this var manually. Otherwise this manifest could not be read by poweshell.
+ModuleVersion = $Env:APPVEYOR_BUILD_VERSION
 
 # ID used to uniquely identify this module
 GUID = '83913031-bbde-4b82-b00d-7d45faafe62f'
