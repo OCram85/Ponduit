@@ -29,6 +29,7 @@ Manual Way
 Build Details
 =============
 
+* Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/OCram85/Ponduit/badge.svg?branch=master)](https://coveralls.io/github/OCram85/Ponduit?branch=master)
 * Overall: [![Build status](https://ci.appveyor.com/api/projects/status/iwmaeig0xi0kgtlf?svg=true)](https://ci.appveyor.com/project/OCram85/ponduit)
 * Master Branch: [![Build status](https://ci.appveyor.com/api/projects/status/iwmaeig0xi0kgtlf/branch/master?svg=true)](https://ci.appveyor.com/project/OCram85/ponduit/branch/master)
 * Dev Branch: [![Build status](https://ci.appveyor.com/api/projects/status/iwmaeig0xi0kgtlf/branch/master?svg=true)](https://ci.appveyor.com/project/OCram85/ponduit/branch/dev)
