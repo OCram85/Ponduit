@@ -4,7 +4,7 @@ Function Invoke-AppVeyorBumpVersion() {
 
     Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
     # Filter Results to prevent exposing secure vars.
-    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notlike "NuGetToken"} | Sort-Object -Property Name | Format-Table
+    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notmatch "(NuGetToken|CoverallsToken)"} | Sort-Object -Property Name | Format-Table
 
     Try {
         $ModManifest = Get-Content -Path '.\src\Ponduit.psd1'
@@ -29,7 +29,7 @@ Function Invoke-AppVeyorBuild() {
     $MsgParams = @{
         Message = 'Creating build artifacts'
         Category = 'Information'
-        Details = 'Extracting srouce files and compressing them into zip file.'
+        Details = 'Extracting source files and compressing them into zip file.'
     }
     Add-AppveyorMessage @MsgParams
     $CompParams = @{
@@ -109,6 +109,19 @@ Function Invoke-AppVeyorTests() {
 
 }
 
+Function Invoke-CoverageReport() {
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory=$False)]
+        [ValidateNotNullOrEmpty()]
+        [String]$RepoToken = $Env:CoverallsToken
+    )
+
+    $FileMap = New-PesterFileMap -SourceRoot '.\src' -PesterRoot '.\tests'
+    $CoverageReport = New-CoverageReport -PesterFileMap $FileMap -RepoToken $RepoToken
+    Publish-CoverageReport -CoverageReport $CoverageReport
+}
+
 function Invoke-AppVeyorPSGallery() {
     [CmdletBinding()]
     Param()
@@ -134,13 +147,13 @@ function Invoke-AppVeyorPSGallery() {
         }
         Else {
             Write-Host "Skip publishing to PS Gallery because we are on $($env:APPVEYOR_REPO_BRANCH) branch." -ForegroundColor Yellow
-            # had to remve the publish-Module statement bacause it would publish although the -WhatIf is given.
+            # had to remove the publish-Module statement because it would publish although the -WhatIf is given.
             # Publish-Module -Name 'Ponduit' -NuGetApiKey $env:NuGetToken -Verbose -WhatIf
         }
     }
     Catch {
         $MsgParams = @{
-            Message = 'Could not delpoy module to PSGallery.'
+            Message = 'Could not deploy module to PSGallery.'
             Category = 'Error'
             Details = $_.Exception.Message
         }
