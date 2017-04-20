@@ -8,16 +8,23 @@ branches:
 
 skip_tags: true
 
-image: WMF 5
+image: Visual Studio 2017
 
 # Install pester module and init the Appveyor support.
 install:
-  - cinst pester
+  - ps: Install-PackageProvider -Name NuGet -MinimumVersion '2.8.5.201' -Force -Verbose
+  - ps: Import-PackageProvider NuGet -MinimumVersion '2.8.5.201' -Force
+  - ps: Install-Module -Name 'Pester' -Scope CurrentUser -Force -SkipPublisherCheck -AllowClobber
+  - ps: Update-Module 'Pester'
+  - ps: Install-Module -Name 'PSCoverage' -Scope CurrentUser -Force -SkipPublisherCheck -AllowClobber
+  - ps: Import-Module 'PSCoverage' -Force
   - ps: Import-Module .\tools\AppVeyor.psm1
 
 environment:
   NuGetToken:
     secure: 835qfZIkC9mE7QhkYfOZVAdR8rZhPvxG8BO4CbeaelRQOhlqmaSr8G1DWRJzZ/bS
+  CoverallsToken:
+    secure: nyiBjGDC07q/4OmKINxOfkwGPCywtNeGMmTzoSicmHMqOWycW8DZoJRagRTDEucc
 
 build: false
 
@@ -29,6 +36,7 @@ build_script:
 
 test_script:
   - ps: Invoke-AppVeyorTests
+  - ps: Invoke-CoverageReport
 
 deploy:
   - provider: GitHub

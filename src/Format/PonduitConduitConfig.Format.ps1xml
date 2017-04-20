@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Ponduit.Conduit.Config</Name>
+            <ViewSelectedBy>
+                <TypeName>Ponduit.Conduit.Config</TypeName>
+            </ViewSelectedBy>
+            <ListControl>
+                <ListEntries>
+                    <ListEntry>
+                        <ListItems>
+                            <ListItem>
+                                <PropertyName>phabricator-uri</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>conduit-token</PropertyName>
+                            </ListItem>
+                            <ListItem>
+                                <PropertyName>conduit-methods</PropertyName>
+                            </ListItem>
+                        </ListItems>
+                    </ListEntry>
+                </ListEntries>
+            </ListControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>
