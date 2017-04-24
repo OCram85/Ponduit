@@ -119,6 +119,8 @@ Function Invoke-CoverageReport() {
 
     $FileMap = New-PesterFileMap -SourceRoot '.\src' -PesterRoot '.\tests'
     $CoverageReport = New-CoverageReport -PesterFileMap $FileMap -RepoToken $RepoToken
+    Write-Host "CoverageReport JSON:" -ForegroundColor Yellow
+    $CoverageReport | ConvertTo-Json -Depth 5 -Compress | Out-String | Write-Host
     Publish-CoverageReport -CoverageReport $CoverageReport
 }
 
