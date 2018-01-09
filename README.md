@@ -1,6 +1,11 @@
-| AppVeyor Overall | AppVeyor Master | AppVeyor Dev | Coveralls.io  | Download |
-| :--------------: | :-------------: | :----------: | :-----------: | :--------:|
-| [![Build status](https://ci.appveyor.com/api/projects/status/iwmaeig0xi0kgtlf?svg=true)](https://ci.appveyor.com/project/OCram85/ponduit) | [![Build status](https://ci.appveyor.com/api/projects/status/iwmaeig0xi0kgtlf/branch/master?svg=true)](https://ci.appveyor.com/project/OCram85/ponduit/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/iwmaeig0xi0kgtlf/branch/dev?svg=true)](https://ci.appveyor.com/project/OCram85/ponduit/branch/dev) | [![Coverage Status](https://coveralls.io/repos/github/OCram85/Ponduit/badge.svg?branch=master)](https://coveralls.io/github/OCram85/Ponduit?branch=master) | [![Download](https://img.shields.io/badge/powershellgallery-Ponduit-blue.svg)](https://www.powershellgallery.com/packages/Ponduit)
+[![AppVeyor branch](https://img.shields.io/appveyor/ci/OCram85/Ponduit/master.svg?style=plastic "Master Banch Build Status")](https://ci.appveyor.com/project/OCram85/ponduit/branch/master)
+[![AppVeyor tests branch](https://img.shields.io/appveyor/tests/OCram85/Ponduit/master.svg?style=plastic "Pester Tests Results")](https://ci.appveyor.com/project/OCram85/ponduit/branch/master/tests)
+[![Coveralls github](https://img.shields.io/coveralls/github/OCram85/Ponduit.svg?style=plastic "Coveralls.io Coverage Report")](https://coveralls.io/github/OCram85/Ponduitbranch=master)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/Ponduit.svg?style=plastic "PowershellGallery Published Version")](https://www.powershellgallery.com/packages/Ponduit)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/Ponduit.svg?style=plastic "PowershellGallery Downloads")](https://www.powershellgallery.com/packages/Ponduit)
+
+![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)
+![forthebadge](http://forthebadge.com/images/badges/for-you.svg)
 
 General
 =======
