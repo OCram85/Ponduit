@@ -8,7 +8,7 @@ Function Invoke-AppVeyorBumpVersion() {
 
     Try {
         $ModManifest = Get-Content -Path '.\src\Ponduit.psd1'
-        $BumpedManifest = $ModManifest -replace '\$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
+        $BumpedManifest = $ModManifest -replace '0.0.0.99999', $Env:APPVEYOR_BUILD_VERSION
         Remove-Item -Path '.\src\Ponduit.psd1'
         Out-File -FilePath '.\src\Ponduit.psd1' -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
     }
